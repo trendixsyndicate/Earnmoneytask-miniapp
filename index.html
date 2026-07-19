@@ -183,6 +183,19 @@ text-align:center;
 <div class="logo">
 <h1>EarnMoneyTask</h1>
 <p id="username">Memuat data pengguna...</p>
+    <div class="card">
+
+<h2>👤 Profil Telegram</h2>
+
+<p><b>Nama:</b> <span id="nama">-</span></p>
+
+<p><b>Username:</b> <span id="usertelegram">-</span></p>
+
+<p><b>ID Telegram:</b> <span id="userid">-</span></p>
+
+<p><b>Premium:</b> <span id="premium">Tidak</span></p>
+
+    </div>
 <p>Telegram Mini App</p>
 </div>
 
@@ -305,6 +318,23 @@ tg.expand();
 
 const user = tg.initDataUnsafe.user;
 if (user) {
+
+document.getElementById("username").innerHTML =
+"👋 Halo, " + user.first_name;
+
+document.getElementById("nama").innerHTML =
+user.first_name + (user.last_name ? " " + user.last_name : "");
+
+document.getElementById("usertelegram").innerHTML =
+user.username ? "@" + user.username : "-";
+
+document.getElementById("userid").innerHTML =
+user.id;
+
+document.getElementById("premium").innerHTML =
+user.is_premium ? "Ya ⭐" : "Tidak";
+
+
     document.getElementById("username").innerHTML =
         "👋 Halo, " + user.first_name;
 
