@@ -161,41 +161,75 @@ function claim(){
 
 saldo+=500;
 
-update();
+let saldo = Number(localStorage.getItem("saldo")) || 0;
+let iklan = Number(localStorage.getItem("iklan")) || 0;
+let claim = localStorage.getItem("claim") || "";
 
-document.getElementById("status").innerHTML="✅ Bonus harian berhasil diklaim";
+function simpan(){
+    localStorage.setItem("saldo", saldo);
+    localStorage.setItem("iklan", iklan);
+    localStorage.setItem("claim", claim);
+}
 
+function update(){
+
+    document.getElementById("saldo").innerHTML =
+    "Rp " + saldo.toLocaleString("id-ID");
+
+    document.getElementById("jumlah").innerHTML =
+    iklan + "/10";
+
+    document.getElementById("bar").style.width =
+    (iklan * 10) + "%";
+
+    simpan();
+}
+
+function claimBonus(){
+
+    let hari = new Date().toDateString();
+
+    if(claim == hari){
+        alert("Bonus hari ini sudah diambil.");
+        return;
+    }
+
+    saldo += 500;
+    claim = hari;
+
+    update();
+
+    alert("Bonus Rp500 berhasil ditambahkan.");
 }
 
 function watchAd(){
 
-if(iklan>=10){
+    if(iklan >= 10){
+        alert("Batas iklan hari ini sudah habis.");
+        return;
+    }
 
-alert("Batas iklan hari ini sudah habis.");
+    setTimeout(function(){
 
-return;
+        saldo += 200;
+        iklan++;
 
-}
+        update();
 
-document.getElementById("status").innerHTML="Memutar iklan...";
+        alert("Hadiah Rp200 berhasil ditambahkan.");
 
-setTimeout(function(){
-
-saldo+=200;
-
-iklan++;
-
-update();
-
-document.getElementById("status").innerHTML="🎉 Hadiah Rp200 berhasil ditambahkan";
-
-},3000);
+    },3000);
 
 }
 
+function withdraw(){
+
+    if(saldo < 50000){
+        alert("Minimal withdraw Rp50.000");
+        return;
+    }
+
+    alert("Permintaan withdraw berhasil dikirim.");
+}
+
 update();
-
-</script>
-
-</body>
-</html>
