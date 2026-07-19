@@ -2,137 +2,225 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>EarnMoneyTask</title>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-background:#111;
+
+background:#0f172a;
 color:#fff;
-padding:20px;
+padding:18px;
+padding-bottom:90px;
+
 }
 
-h1{
-font-size:38px;
-margin-bottom:10px;
-}
+.header{
 
-p{
-color:#aaa;
+display:flex;
+justify-content:space-between;
+align-items:center;
 margin-bottom:20px;
+
+}
+
+.logo{
+
+font-size:28px;
+font-weight:700;
+
+}
+
+.level{
+
+background:#22c55e;
+padding:8px 14px;
+border-radius:30px;
+font-size:14px;
+
 }
 
 .card{
-background:#1f1f1f;
-padding:20px;
+
+background:#1e293b;
 border-radius:20px;
-margin-bottom:20px;
+padding:20px;
+margin-bottom:18px;
+box-shadow:0 5px 18px rgba(0,0,0,.3);
+
 }
 
 .balance{
-font-size:52px;
+
+font-size:40px;
 font-weight:bold;
-color:#00ff66;
-margin:15px 0;
+margin-top:10px;
+color:#22c55e;
+
+}
+
+.grid{
+
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+
+}
+
+.menu{
+
+background:#334155;
+padding:18px;
+border-radius:18px;
+text-align:center;
+
+}
+
+.menu h3{
+
+margin-top:8px;
+font-size:16px;
+
 }
 
 button{
-width:100%;
-padding:18px;
-border:none;
-border-radius:15px;
-background:#00cc55;
-color:white;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-}
 
-button:active{
-transform:scale(.98);
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#22c55e;
+color:white;
+font-size:18px;
+font-weight:bold;
+margin-top:15px;
+
 }
 
 .progress{
+
 height:12px;
-background:#333;
-border-radius:20px;
-margin-top:10px;
+background:#475569;
+border-radius:30px;
 overflow:hidden;
+margin-top:10px;
+
 }
 
 .bar{
+
 height:12px;
 width:0%;
-background:#00ff66;
+background:#22c55e;
+
 }
 
-small{
-color:#bbb;
-font-size:18px;
+.history{
+
+margin-top:15px;
+
 }
 
-.notice{
-background:#1f1f1f;
-padding:15px;
-border-radius:15px;
-margin-top:20px;
+.history-item{
+
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid #334155;
+
+}
+
+.bottom{
+
+position:fixed;
+left:0;
+bottom:0;
+width:100%;
+background:#1e293b;
+display:flex;
+justify-content:space-around;
+padding:15px 0;
+
+}
+
+.bottom div{
+
 text-align:center;
-color:#00ff66;
-font-weight:bold;
+font-size:13px;
+
 }
+
+input{
+
+width:100%;
+padding:15px;
+background:#334155;
+border:none;
+border-radius:12px;
+color:white;
+margin-top:15px;
+
+}
+
 </style>
-    
-<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-    
+
 </head>
+
 <body>
 
-<h1>EarnMoneyTask</h1>
-<p>Hasilkan uang dengan menyelesaikan tugas.</p>
+<div class="header">
+
+<div>
+
+<div class="logo">
+EarnMoneyTask
+</div>
+
+<small>Telegram Mini App</small>
+
+</div>
+
+<div class="level">
+🥉 Bronze
+</div>
+
+</div>
 
 <div class="card">
 
-<h2>Saldo</h2>
+<h3>Saldo Anda</h3>
 
 <div class="balance" id="saldo">
-Rp 0
+Rp0
 </div>
 
-<small>
-Iklan ditonton:
-<span id="jumlah">0</span>/10
-</small>
+<p>
+Iklan hari ini:
+<span id="jumlah">
+0
+</span>/10
+</p>
 
 <div class="progress">
+
 <div class="bar" id="bar"></div>
-</div>
 
 </div>
-
-<div class="card">
-
-<h2>Absen Harian</h2>
-
-<br>
-
-<button onclick="claim()">
-🎁 Claim Harian
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>Tonton Iklan</h2>
-
-<br>
 
 <button onclick="watchAd()">
 🎬 Tonton Iklan
@@ -140,98 +228,215 @@ Iklan ditonton:
 
 </div>
 
-<div class="notice" id="status">
-Selamat datang 👋
+<div class="grid">
+
+<div class="menu">
+🎁
+<h3>Check In</h3>
+<button onclick="claimBonus()">
+Claim
+</button>
+</div>
+
+<div class="menu">
+👥
+<h3>Referral</h3>
+<button onclick="inviteFriend()">
+Undang
+</button>
+</div>
+
+<div class="menu">
+💳
+<h3>Withdraw</h3>
+<button onclick="withdraw()">
+Tarik
+</button>
+</div>
+
+<div class="menu">
+📋
+<h3>Tugas</h3>
+<button>
+Lihat
+</button>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Riwayat Reward</h3>
+
+<div id="history" class="history">
+
+</div>
+
+    </div>
+
+    <div class="bottom">
+
+<div onclick="alert('Home')">
+🏠
+<br>
+Home
+</div>
+
+<div onclick="alert('Tugas')">
+📋
+<br>
+Tugas
+</div>
+
+<div onclick="alert('Dompet')">
+💰
+<br>
+Wallet
+</div>
+
+<div onclick="alert('Profil')">
+👤
+<br>
+Profil
+</div>
+
 </div>
 
 <script>
 
-let saldo=0;
-let iklan=0;
+Telegram.WebApp.ready();
+
+let saldo = Number(localStorage.getItem("saldo")) || 0;
+let jumlah = Number(localStorage.getItem("jumlah")) || 0;
+let claimHari = localStorage.getItem("claimHari") || "";
+
+const BLOCK_ID = "38922";
+
+let AdController = null;
+
+if(window.Adsgram){
+    AdController = window.Adsgram.init({
+        blockId: BLOCK_ID
+    });
+}
+
+function simpan(){
+
+localStorage.setItem("saldo",saldo);
+localStorage.setItem("jumlah",jumlah);
+localStorage.setItem("claimHari",claimHari);
+
+}
 
 function update(){
 
 document.getElementById("saldo").innerHTML="Rp "+saldo.toLocaleString("id-ID");
 
-document.getElementById("jumlah").innerHTML=iklan;
+document.getElementById("jumlah").innerHTML=jumlah;
 
-document.getElementById("bar").style.width=(iklan*10)+"%";
+document.getElementById("bar").style.width=(jumlah*10)+"%";
+
+simpan();
 
 }
 
-function claim(){
+function tambahHistory(text){
 
-saldo+=500;
+const item=document.createElement("div");
 
-let saldo = Number(localStorage.getItem("saldo")) || 0;
-let iklan = Number(localStorage.getItem("iklan")) || 0;
-let claim = localStorage.getItem("claim") || "";
+item.className="history-item";
 
-function simpan(){
-    localStorage.setItem("saldo", saldo);
-    localStorage.setItem("iklan", iklan);
-    localStorage.setItem("claim", claim);
-}
+item.innerHTML="<span>"+text+"</span><span>"+new Date().toLocaleTimeString()+"</span>";
 
-function update(){
+document.getElementById("history").prepend(item);
 
-    document.getElementById("saldo").innerHTML =
-    "Rp " + saldo.toLocaleString("id-ID");
-
-    document.getElementById("jumlah").innerHTML =
-    iklan + "/10";
-
-    document.getElementById("bar").style.width =
-    (iklan * 10) + "%";
-
-    simpan();
 }
 
 function claimBonus(){
 
-    let hari = new Date().toDateString();
+const hari=new Date().toDateString();
 
-    if(claim == hari){
-        alert("Bonus hari ini sudah diambil.");
-        return;
-    }
+if(claimHari===hari){
 
-    saldo += 500;
-    claim = hari;
+alert("Bonus hari ini sudah diambil.");
 
-    update();
+return;
 
-    alert("Bonus Rp500 berhasil ditambahkan.");
+}
+
+claimHari=hari;
+
+saldo+=500;
+
+tambahHistory("🎁 Bonus Harian +Rp500");
+
+update();
+
 }
 
 function watchAd(){
 
-    if(iklan >= 10){
-        alert("Batas iklan hari ini sudah habis.");
-        return;
-    }
+if(jumlah>=10){
 
-    setTimeout(function(){
+alert("Batas iklan hari ini sudah habis.");
 
-        saldo += 200;
-        iklan++;
+return;
 
-        update();
+}
 
-        alert("Hadiah Rp200 berhasil ditambahkan.");
+if(!AdController){
 
-    },3000);
+alert("AdsGram belum siap.");
+
+return;
+
+}
+
+AdController.show()
+
+.then(()=>{
+
+saldo+=200;
+
+jumlah++;
+
+tambahHistory("🎬 Reward Ads +Rp200");
+
+update();
+
+})
+
+.catch(()=>{
+
+alert("Iklan dibatalkan atau gagal dimuat.");
+
+});
+
+}
+
+function inviteFriend(){
+
+alert("Fitur referral akan kita hubungkan pada tahap berikutnya.");
 
 }
 
 function withdraw(){
 
-    if(saldo < 50000){
-        alert("Minimal withdraw Rp50.000");
-        return;
-    }
+if(saldo<50000){
 
-    alert("Permintaan withdraw berhasil dikirim.");
+alert("Minimal withdraw Rp50.000");
+
+return;
+
+}
+
+alert("Permintaan withdraw berhasil dikirim.");
+
 }
 
 update();
+
+</script>
+
+</body>
+</html>
