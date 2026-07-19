@@ -182,6 +182,7 @@ text-align:center;
 
 <div class="logo">
 <h1>EarnMoneyTask</h1>
+<p id="username">Memuat data pengguna...</p>
 <p>Telegram Mini App</p>
 </div>
 
@@ -303,6 +304,13 @@ tg.ready();
 tg.expand();
 
 const user = tg.initDataUnsafe.user;
+if (user) {
+    document.getElementById("username").innerHTML =
+        "👋 Halo, " + user.first_name;
+
+    console.log("ID:", user.id);
+    console.log("Username:", user.username);
+}
 
 let saldo = Number(localStorage.getItem("saldo")) || 0;
 let iklan = Number(localStorage.getItem("iklan")) || 0;
