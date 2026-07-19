@@ -2,117 +2,200 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EarnMoneyTask</title>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-
 <style>
-body{
+*{
 margin:0;
-background:#111;
+padding:0;
+box-sizing:border-box;
 font-family:Arial,sans-serif;
-color:white;
+}
+
+body{
+background:#111;
+color:#fff;
 padding:20px;
 }
-.card{
-background:#1f1f1f;
-padding:18px;
-border-radius:18px;
-margin-bottom:15px;
-}
+
 h1{
-margin:0;
-font-size:34px;
+font-size:38px;
+margin-bottom:10px;
 }
+
 p{
 color:#aaa;
+margin-bottom:20px;
 }
+
+.card{
+background:#1f1f1f;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
 .balance{
-font-size:42px;
+font-size:52px;
 font-weight:bold;
 color:#00ff66;
+margin:15px 0;
 }
+
 button{
 width:100%;
-padding:16px;
+padding:18px;
 border:none;
-border-radius:14px;
-font-size:18px;
-font-weight:bold;
-background:#00c853;
+border-radius:15px;
+background:#00cc55;
 color:white;
-margin-top:12px;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
 }
-small{
-color:#bbb;
+
+button:active{
+transform:scale(.98);
 }
+
 .progress{
-width:100%;
 height:12px;
 background:#333;
-border-radius:10px;
+border-radius:20px;
 margin-top:10px;
 overflow:hidden;
 }
+
 .bar{
 height:12px;
 width:0%;
 background:#00ff66;
 }
-</style>
-</head>
-  
-<body>
 
-<div class="container">
+small{
+color:#bbb;
+font-size:18px;
+}
+
+.notice{
+background:#1f1f1f;
+padding:15px;
+border-radius:15px;
+margin-top:20px;
+text-align:center;
+color:#00ff66;
+font-weight:bold;
+}
+</style>
+
+</head>
+<body>
 
 <h1>EarnMoneyTask</h1>
 <p>Hasilkan uang dengan menyelesaikan tugas.</p>
 
 <div class="card">
+
 <h2>Saldo</h2>
-<h1 id="saldo">Rp 0</h1>
-<p>Level : <b>Perunggu</b></p>
-<p>Iklan tersisa : <span id="adsLeft">10</span>/10</p>
+
+<div class="balance" id="saldo">
+Rp 0
+</div>
+
+<small>
+Iklan ditonton:
+<span id="jumlah">0</span>/10
+</small>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
 </div>
 
 <div class="card">
+
 <h2>Absen Harian</h2>
-<button id="checkin">🎁 Claim Bonus</button>
+
+<br>
+
+<button onclick="claim()">
+🎁 Claim Harian
+</button>
+
 </div>
 
 <div class="card">
+
 <h2>Tonton Iklan</h2>
-<button id="showAd">🎬 Tonton Iklan</button>
-</div>
 
-<div class="card">
-<h2>Tugas Hari Ini</h2>
+<br>
 
-<p>Tonton 5 iklan</p>
-<progress id="progress" value="0" max="5"></progress>
-
-<p id="taskStatus">0 / 5</p>
+<button onclick="watchAd()">
+🎬 Tonton Iklan
+</button>
 
 </div>
 
-<div class="card">
-<h2>Withdraw</h2>
-<button id="withdraw">💳 Tarik Saldo</button>
+<div class="notice" id="status">
+Selamat datang 👋
 </div>
 
-<div class="card">
-<h2>Referral</h2>
-<p>Undang teman dan dapatkan bonus.</p>
-<button id="invite">👥 Undang Teman</button>
-</div>
+<script>
 
-</div>
+let saldo=0;
+let iklan=0;
 
-<script src="script.js"></script>
+function update(){
 
-  </body>
+document.getElementById("saldo").innerHTML="Rp "+saldo.toLocaleString("id-ID");
 
-  
+document.getElementById("jumlah").innerHTML=iklan;
+
+document.getElementById("bar").style.width=(iklan*10)+"%";
+
+}
+
+function claim(){
+
+saldo+=500;
+
+update();
+
+document.getElementById("status").innerHTML="✅ Bonus harian berhasil diklaim";
+
+}
+
+function watchAd(){
+
+if(iklan>=10){
+
+alert("Batas iklan hari ini sudah habis.");
+
+return;
+
+}
+
+document.getElementById("status").innerHTML="Memutar iklan...";
+
+setTimeout(function(){
+
+saldo+=200;
+
+iklan++;
+
+update();
+
+document.getElementById("status").innerHTML="🎉 Hadiah Rp200 berhasil ditambahkan";
+
+},3000);
+
+}
+
+update();
+
+</script>
+
+</body>
+</html>
