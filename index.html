@@ -62,25 +62,25 @@ width:0%;
 background:#00ff66;
 }
 </style>
-
 </head>
+  
 <body>
+
+<div class="container">
 
 <h1>EarnMoneyTask</h1>
 <p>Hasilkan uang dengan menyelesaikan tugas.</p>
 
 <div class="card">
 <h2>Saldo</h2>
-<div class="balance" id="saldo">Rp 0</div>
-<small>Iklan ditonton: <span id="jumlah">0</span>/10</small>
-<div class="progress">
-<div class="bar" id="bar"></div>
-</div>
+<h1 id="saldo">Rp 0</h1>
+<p>Level : <b>Perunggu</b></p>
+<p>Iklan tersisa : <span id="adsLeft">10</span>/10</p>
 </div>
 
 <div class="card">
 <h2>Absen Harian</h2>
-<button id="checkin">🎁 Claim Harian</button>
+<button id="checkin">🎁 Claim Bonus</button>
 </div>
 
 <div class="card">
@@ -88,58 +88,31 @@ background:#00ff66;
 <button id="showAd">🎬 Tonton Iklan</button>
 </div>
 
-<script>
+<div class="card">
+<h2>Tugas Hari Ini</h2>
 
-let saldo=0;
-let jumlah=0;
+<p>Tonton 5 iklan</p>
+<progress id="progress" value="0" max="5"></progress>
 
-const AdController=window.Adsgram.init({
-blockId:"38922"
-});
+<p id="taskStatus">0 / 5</p>
 
-document.getElementById("checkin").onclick=function(){
+</div>
 
-saldo+=500;
+<div class="card">
+<h2>Withdraw</h2>
+<button id="withdraw">💳 Tarik Saldo</button>
+</div>
 
-document.getElementById("saldo").innerHTML="Rp "+saldo;
+<div class="card">
+<h2>Referral</h2>
+<p>Undang teman dan dapatkan bonus.</p>
+<button id="invite">👥 Undang Teman</button>
+</div>
 
-alert("Bonus harian Rp500 berhasil diklaim.");
+</div>
 
-this.disabled=true;
+<script src="script.js"></script>
 
-this.innerHTML="✅ Sudah Diklaim";
+  </body>
 
-};
-
-document.getElementById("showAd").onclick=function(){
-
-AdController.show()
-
-.then(()=>{
-
-saldo+=100;
-
-jumlah++;
-
-document.getElementById("saldo").innerHTML="Rp "+saldo;
-
-document.getElementById("jumlah").innerHTML=jumlah;
-
-document.getElementById("bar").style.width=(jumlah*10)+"%";
-
-alert("Selamat! Kamu mendapat Rp100.");
-
-})
-
-.catch(()=>{
-
-alert("Iklan gagal atau ditutup.");
-
-});
-
-};
-
-</script>
-
-</body>
-</html>
+  
