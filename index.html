@@ -1,19 +1,107 @@
-<div class="header">
-  <h1>EarnMoneyTask</h1>
-  <p>Selamat datang 👋</p>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EarnMoneyTask</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+
+<style>
+body{
+margin:0;
+background:#111;
+color:#fff;
+font-family:Arial,sans-serif;
+padding:20px;
+}
+h1{
+margin:0;
+font-size:34px;
+}
+p{
+color:#aaa;
+}
+.card{
+background:#1c1c1c;
+padding:20px;
+border-radius:18px;
+margin-top:18px;
+}
+.balance{
+font-size:42px;
+color:#00ff66;
+font-weight:bold;
+}
+button{
+width:100%;
+padding:18px;
+margin-top:15px;
+border:none;
+border-radius:15px;
+font-size:20px;
+font-weight:bold;
+background:#00cc55;
+color:#fff;
+}
+.task{
+margin-top:20px;
+padding:15px;
+background:#1c1c1c;
+border-radius:15px;
+}
+.progress{
+height:10px;
+background:#444;
+border-radius:10px;
+overflow:hidden;
+margin-top:10px;
+}
+.bar{
+height:10px;
+width:0%;
+background:#00ff66;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>EarnMoneyTask</h1>
+<p>Hasilkan uang dari menyelesaikan tugas.</p>
+
+<div class="card">
+<h2>Saldo</h2>
+<div class="balance" id="saldo">Rp 0</div>
 </div>
 
-<div class="grid">
+<button id="showAd">🎬 Tonton Iklan</button>
 
-  <div class="card">
-      <h3>Saldo</h3>
-      <h1 id="balance">Rp 0</h1>
-      <small>Iklan tersisa 10/10</small>
-  </div>
+<div class="task">
+<h3>Tugas Hari Ini</h3>
+<p>Iklan ditonton: <span id="jumlah">0</span>/10</p>
 
-  <div class="card">
-      <h3>Absen Harian</h3>
-      <button id="checkin">Claim</button>
-  </div>
-
+<div class="progress">
+<div class="bar" id="bar"></div>
 </div>
+</div>
+
+<script>
+
+let saldo=0;
+let jumlah=0;
+
+const AdController=window.Adsgram.init({
+blockId:"38922"
+});
+
+document.getElementById("showAd").onclick=function(){
+
+AdController.show()
+
+.then(()=>{
+
+saldo+=100;
